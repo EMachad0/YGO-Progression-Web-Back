@@ -19,8 +19,8 @@
             </a>
             
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{ url_for('collection', guild=guild, user=user) }}" class="nav-link px-2 link-light">Collection</a></li>
-                <li><a href="{{ url_for('deck_builder', guild=guild, user=user) }}" class="nav-link px-2 link-light">DeckBuilder</a></li>
+                <li><a href="{{ url_for('collection.collection', guild=guild, user=user) }}" class="nav-link px-2 link-light">Collection</a></li>
+                <li><a href="{{ url_for('deck_builder.deck_builder', guild=guild, user=user) }}" class="nav-link px-2 link-light">DeckBuilder</a></li>
             </ul>
         
             <div class="col-md-3 text-end">

@@ -1,28 +1,15 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, url_for, redirect
+
+import blueprints
 
 app = Flask(__name__)
-
+app.register_blueprint(blueprints.login, url_prefix="/deck_builder")
+app.register_blueprint(blueprints.collection, url_prefix="/collection")
+app.register_blueprint(blueprints.deck_builder)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        guild = request.form["guildInput"]
-        user = request.form["userInput"]
-        if guild.isnumeric() and user.isnumeric():
-            return redirect(url_for('collection', guild=guild, user=user))
-    return render_template('login.html')
-
-@app.route('/collection/<guild>/<user>')
-def collection(guild, user):
-    return render_template('collection.html', guild=guild, user=user)
-
-@app.route('/deck_builder/<guild>/<user>')
-def deck_builder(guild, user):
-    return render_template('deck_builder.html', guild=guild, user=user)
+    return redirect(url_for('login.login'))
 
 
 if __name__ == '__main__':
