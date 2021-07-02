@@ -33,9 +33,10 @@
             </div>
             <div class="row" id="card-list">
                 {% for c in cards %}
-                    <div class="col-md-2 m-0 p-0 filterable show" id="{{ c['card_cod'] }}">
-                        <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg" alt=""
-                             class="img-fluid">
+                    <div class="col-md-2 m-0 p-0 filterable{% if loop.index <= 30 %}{{ ' show' }}{% endif %}" id="{{ c['card_cod'] }}">
+                        <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}">
+                            <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg" alt="" class="img-fluid">
+                        </a>
                     </div>
                 {% endfor %}
             </div>
