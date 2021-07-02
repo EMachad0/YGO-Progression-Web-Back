@@ -21,7 +21,6 @@ def collection(guild, user):
     
     cards = db.make_select(COLLECTION_SELECT, [player['player_cod']])
     cards_json = {c['card_cod']: c for c in cards}
-    print(cards)
     return render_template('collection.html', cards=cards, cards_json=cards_json, guild=guild, user=user)
 
 
