@@ -1,0 +1,11 @@
+.img {
+    /*margin: 0;*/
+}
+
+.filterable {
+    display: none;
+}
+
+.show {
+    display: block;
+}
