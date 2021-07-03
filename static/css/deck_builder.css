@@ -1,0 +1,36 @@
+.hide {
+    display: none;
+}
+
+.deck {
+    /*width: 730px;*/
+    min-height: 50px;
+    border: 3px solid;
+}
+
+.main-deck{
+    /*height: 504px;*/
+    border-color: #a16741;
+    background-color: #b97b51;
+}
+
+.extra-deck{
+    /*height: 168px;*/
+    border-color: #6a6196;
+    background-color: #8078a8;
+}
+
+.side-deck{
+    /*height: 168px;*/
+    border-color: #5e7547;
+    background-color: #728e56;
+}
+
+.col-card {
+    width: 10%;
+    float: left;
+}
+
+.draggable {
+    cursor: move;
+}

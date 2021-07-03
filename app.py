@@ -3,9 +3,9 @@ from flask import Flask, url_for, redirect
 import blueprints
 
 app = Flask(__name__)
-app.register_blueprint(blueprints.login, url_prefix="/deck_builder")
+app.register_blueprint(blueprints.login)
 app.register_blueprint(blueprints.collection, url_prefix="/collection")
-app.register_blueprint(blueprints.deck_builder)
+app.register_blueprint(blueprints.deck_builder, url_prefix="/deck_builder")
 
 @app.route('/')
 def index():
