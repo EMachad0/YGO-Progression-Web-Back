@@ -52,14 +52,14 @@
                     </div>
                 </div>
                 {# Collection #}
-                <div style="height: 1000px;" class="row overflow-auto" id="card-list">
+                <div style="height: 1000px;" class="row overflow-auto" id="card-list" ondragover="onDragOver(event);" ondrop="onDrop(event);">
                     {% for c in cards %}
                         <div class="row m-0 pb-1" id="{{ c['card_cod'] }}">
                             <div class="col-3 bg-primary p-0">
                                 <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}">
                                     <img src="https://storage.googleapis.com/ygoprodeck.com/pics_small/{{ c['cod_img'] }}.jpg"
                                          alt="" class="img-fluid" draggable="true" ondragstart="onDragStart(event);"
-                                         id="img-{{ c['card_cod'] }}">
+                                         id="card-list_{{ c['card_cod'] }}">
                                 </a>
                             </div>
                             <div class="col-9 text-center bg-secondary align-middle">
@@ -82,110 +82,10 @@
 {% endblock %}
 {% block script %}
     <script>
-        const card_list = document.getElementById('card-list');
         const card_values = JSON.parse('{{ cards_json|tojson|safe }}');
-        const deck = {"main":[], "extra":[], "side":[]};
-        const extra_deck_types = ["Fusion Monster"];
-
-        function onDragOver(event) {
-            event.preventDefault();
-        }
-
-        function onDragStart(event) {
-            event.dataTransfer.setData('text/plain', event.target.id);
-            console.log(event.target.id)
-        }
-
-        function onDrop(event) {
-            const data = event.dataTransfer.getData('text');
-            const split = data.split("-");
-            const source = split[0];
-            const id = split[1];
-            const dropzone = event.target;
-            const deck_id = dropzone.id;
-
-            if (!card_values.hasOwnProperty(id)) return;
-            if (source === deck_id) return;
-            if (dropzone.childElementCount > (deck_id === "main"? 60:15)) return;
-            if (deck_id === "extra") {
-                if (!extra_deck_types.includes(card_values[id]['type'])) return;
-            } else {
-                if (extra_deck_types.includes(card_values[id]['type'])) return;
-            }
-            
-            console.log(deck);
-            let inDeck = 0;
-            if (deck_id === "extra") inDeck += deck[deck_id].filter(x => x === id).length;
-            else if (deck_id === "side" || deck_id === "main") {
-                inDeck += deck['side'].filter(x => x === id).length;
-                inDeck += deck['main'].filter(x => x === id).length;
-            }
-            if (source !== "img") inDeck--;
-            
-            if (card_values[id]['quantity'] === inDeck) return;
-            
-            const elem = document.getElementById(data);
-            
-            const newDiv = document.createElement('div');
-            newDiv.classList.add("col-card", "m-0", "p-1");
-            const cln = elem.cloneNode(true);
-            cln.id = deck_id + "-" + id;
-            newDiv.appendChild(cln);
-            
-            dropzone.appendChild(newDiv);
-            deck[deck_id].push(id);
-            if (source !== "img") {
-                deck[source].splice(deck[source].indexOf(id), 1);
-                const elem = document.getElementById(data);
-                const parent = document.getElementById(source);
-                parent.removeChild(elem.parentNode);
-            }
-
-            event.dataTransfer.clearData();
-        }
-        
-        function update_deck(element) {
-        }
-        
-        function hide(element) {element.classList.add("hide");}
-        function show(element) {element.classList.remove("hide");}
-
-        function card_list_filter() {
-            const name = document.getElementById('filter-name').value
-            let toFilter = card_list.children;
-            toFilter = Array.prototype.slice.call(toFilter, 0);
-            toFilter.forEach(function (v) {
-                let card = card_values[v.id];
-                if (name !== "" && !card['name'].includes(name)) hide(v);
-                else show(v);
-            });
-        }
-
-        function card_list_sort() {
-            const sort_param = document.getElementById('sort-param');
-            const key = sort_param.options[sort_param.selectedIndex].text;
-            if (key === "any") return;
-
-            const sort_order = document.getElementById('sort-order');
-            const ord = sort_order.options[sort_order.selectedIndex].text;
-
-            const card_list = document.getElementById('card-list');
-            let toSort = card_list.children;
-            toSort = Array.prototype.slice.call(toSort, 0);
-
-            toSort.sort(function (a, b) {
-                let va = card_values[a.id][key];
-                let vb = card_values[b.id][key];
-                if (va == null && vb == null) return -1;
-                if (va == null) return 1;
-                if (vb == null) return -1;
-                return (ord === "asc" ? 1 : -1) * (va <= vb ? -1 : 1);
-            });
-
-            card_list.innerHTML = "";
-            for (let i = 0, l = toSort.length; i < l; i++) {
-                card_list.appendChild(toSort[i]);
-            }
-        }
     </script>
+    <script src="{{ url_for("static", filename="js/card_sort.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/card_filter.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/deck_builder.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/deck_builder_drag_drop.js") }}"></script>
 {% endblock %}
