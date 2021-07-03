@@ -1,7 +1,3 @@
-const deck = {"main":[], "extra":[], "side":[]};
-const extra_deck_types = ["Fusion Monster"];
-
-
 function card_list_sort() {
     const sort_param = document.getElementById('sort-param');
     const key = sort_param.options[sort_param.selectedIndex].text;
