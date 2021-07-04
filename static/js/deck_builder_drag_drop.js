@@ -51,12 +51,14 @@ function onDrop(event) {
     if (deck_id !== "card-list") {
         const newDiv = document.createElement('div');
         newDiv.classList.add("col-card", "m-0", "p-1");
+        newDiv.id = id;
         const cln = elem.cloneNode(true);
         cln.id = deck_id + "_" + id;
         newDiv.appendChild(cln);
     
         dropzone.appendChild(newDiv);
         deck[deck_id].push(id);
+        do_sort("level", "des", dropzone);
     }
     
     if (source !== "card-list") {

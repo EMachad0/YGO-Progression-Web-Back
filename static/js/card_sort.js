@@ -8,6 +8,7 @@ function do_sort(key, ord, list) {
         if (va == null && vb == null) return -1;
         if (va == null) return 1;
         if (vb == null) return -1;
+        if (va === vb) return (card_values[a.id]['name'] <= card_values[b.id]['name'] ? -1 : 1);
         return (ord === "asc" ? 1 : -1) * (va <= vb ? -1 : 1);
     });
 

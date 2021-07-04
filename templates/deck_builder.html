@@ -13,7 +13,7 @@
             </div>
             <div class="col-6">
                 <div class="row mt-1">
-                    <div class="col recent-link">
+                    <div class="col">
                         <h5> Main Deck</h5>
                     </div>
                     <div class="col text-end">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 {# Collection #}
-                <div style="height: 1000px;" class="row overflow-auto m-1 box id="card-list" ondragover="onDragOver(event);"
+                <div style="height: 1000px;" class="row overflow-auto m-1 box" id="card-list" ondragover="onDragOver(event);"
                      ondrop="onDrop(event);">
                     {% for c in cards %}
                         <div style="margin-left: 0;" class="row p-0 box" id="{{ c['card_cod'] }}">
