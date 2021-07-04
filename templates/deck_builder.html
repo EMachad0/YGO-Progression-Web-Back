@@ -1,24 +1,35 @@
 {% extends "base.html" %}
 {% block title %} DeckBuilder {% endblock %}
 {% block head %}
-    <link href="/static/css/deck_builder.css" rel="stylesheet"> {% endblock %}
+    <link href="/static/css/deck_builder.css" rel="stylesheet">
+{% endblock %}
 {% block content %}
     <main class="container-fluid">
         <h1 class="text-center">Deck Builder</h1>
         <div class="container-fluid row p-2 d-flex justify-content-center">
-            <div class="col-7 bg-light">
-                <div class="row">
-                    <h5>Main Deck</h5>
+            <div class="col-3">
+                <img src="https://storage.googleapis.com/ygoprodeck.com/pics/7089711.jpg"
+                     alt="" class="img-fluid" draggable="false" id="display">
+            </div>
+            <div class="col-6">
+                <div class="row mt-1">
+                    <div class="col recent-link">
+                        <h5> Main Deck</h5>
+                    </div>
+                    <div class="col text-end">
+                        <button type="button" class="btn btn-outline-light btn-sm" onclick="deck_download()">Export
+                        </button>
+                    </div>
                 </div>
                 <div class="row deck main-deck" id="main" ondragover="onDragOver(event);" ondrop="onDrop(event);">
                     {#<div class="col-card m-0 p-1">#}
                 </div>
-                <div class="row">
+                <div class="row mt-1">
                     <h5>Extra Deck</h5>
                 </div>
                 <div class="row deck extra-deck" id="extra" ondragover="onDragOver(event);" ondrop="onDrop(event);">
                 </div>
-                <div class="row">
+                <div class="row mt-1">
                     <h5>Side Deck</h5>
                 </div>
                 <div class="row deck side-deck" id="side" ondragover="onDragOver(event);" ondrop="onDrop(event);">
@@ -30,7 +41,8 @@
                     <div class="col">
                         <label class="form-label" for="sort-param">Sort by</label>
                         <select class="form-control" onchange="card_list_sort()" id="sort-param">
-                            <option selected>name</option>
+                            <option selected>any</option>
+                            <option>name</option>
                             <option>atk</option>
                             <option>def</option>
                             <option>level</option>
@@ -52,26 +64,29 @@
                     </div>
                 </div>
                 {# Collection #}
-                <div style="height: 1000px;" class="row overflow-auto" id="card-list" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+                <div style="height: 1000px;" class="row overflow-auto m-1 box id="card-list" ondragover="onDragOver(event);"
+                     ondrop="onDrop(event);">
                     {% for c in cards %}
-                        <div class="row m-0 pb-1" id="{{ c['card_cod'] }}">
-                            <div class="col-3 bg-primary p-0">
-                                <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}">
-                                    <img src="https://storage.googleapis.com/ygoprodeck.com/pics_small/{{ c['cod_img'] }}.jpg"
+                        <div style="margin-left: 0;" class="row p-0 box" id="{{ c['card_cod'] }}">
+                            <div class="col-3 m-0 p-0">
+                                <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}" target="_blank">
+                                    <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg"
                                          alt="" class="img-fluid" draggable="true" ondragstart="onDragStart(event);"
-                                         id="card-list_{{ c['card_cod'] }}">
+                                         onmouseover="display_update(this.id);" id="card-list_{{ c['card_cod'] }}">
                                 </a>
                             </div>
-                            <div class="col-9 text-center bg-secondary align-middle">
+                            <div class="col-9 text-center align-middle">
                                 <h6>{{ c['name'] }}</h6>
-                                {{ c['type'] }}
-                                {% if c['level'] %}L{{ c['level'] }}{% endif %}
-                                {% if c['scale'] %}S{{ c['scale'] }}{% endif %}
-                                {% if c['link_val'] %}Link{{ c['link_val'] }}{% endif %}
-                                <br>
-                                {{ c['race'] if c['race'] }}/{{ c['attribute'] if c['attribute'] }}
-                                <br>
-                                {{ c['quantity'] }} in collection
+                                <p class="text-sm">
+                                    {{ c['type'] }}
+                                    {% if c['level'] %}L{{ c['level'] }}{% endif %}
+                                    {% if c['scale'] %}S{{ c['scale'] }}{% endif %}
+                                    {% if c['link_val'] %}Link{{ c['link_val'] }}{% endif %}
+                                    <br>
+                                    {{ c['race'] if c['race'] }}/{{ c['attribute'] if c['attribute'] }}
+                                    <br>
+                                    {{ c['quantity'] }} in collection
+                                </p>
                             </div>
                         </div>
                     {% endfor %}
@@ -86,6 +101,7 @@
     </script>
     <script src="{{ url_for("static", filename="js/card_sort.js") }}"></script>
     <script src="{{ url_for("static", filename="js/card_filter.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/text_download.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck_builder.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck_builder_drag_drop.js") }}"></script>
 {% endblock %}

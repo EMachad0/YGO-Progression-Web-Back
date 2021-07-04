@@ -4,6 +4,7 @@ function card_list_sort() {
     const sort_order = document.getElementById('sort-order');
     const ord = sort_order.options[sort_order.selectedIndex].text;
     const list = document.getElementById('card-list');
+    if (key === "any") return;
     do_sort(key, ord, list);
 }
 
