@@ -44,7 +44,7 @@ function onDrop(event) {
         inDeck += deck['main'].filter(x => x === id).length;
     }
     if (source !== "card-list") inDeck--;
-    if (card_values[id]['quantity'] <= inDeck) return;
+    if (card_values[id]['quantity'] <= inDeck && inDeck <= 3) return;
 
     const elem = document.getElementById(data);
 
