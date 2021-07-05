@@ -7,10 +7,10 @@ function onDragOver(event) {
 function onDragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
     console.log("dragging " + event.target.id)
-
 }
 
 function onDrop(event) {
+    event.preventDefault();
     const data = event.dataTransfer.getData('text');
     const split = data.split("_");
     const source = split[0];
