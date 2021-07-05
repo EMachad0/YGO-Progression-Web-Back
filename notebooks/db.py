@@ -39,3 +39,7 @@ def make_select(select, data):
     except (Exception, psycopg2.Error) as err:
         print(err)
         raise err
+
+
+if __name__ == "__main__":
+    connect(verbose=True)
