@@ -69,14 +69,14 @@
                     {% for c in cards %}
                         <div style="margin-left: 0;" class="row p-0 box" id="{{ c['card_cod'] }}">
                             <div class="col-3 m-0 p-0">
-                                <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}" target="_blank">
-                                    <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg"
-                                         alt="" class="img-fluid" draggable="true" ondragstart="onDragStart(event);"
-                                         onmouseover="display_update(this.id);" id="card-list_{{ c['card_cod'] }}">
-                                </a>
+                                <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg"
+                                     alt="" class="img-fluid" draggable="true" ondragstart="onDragStart(event);"
+                                     onmouseover="display_update(this.id);" id="card-list_{{ c['card_cod'] }}">
                             </div>
                             <div class="col-9 text-center align-middle">
-                                <h6>{{ c['name'] }}</h6>
+                                <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}" target="_blank">
+                                    <h6>{{ c['name'] }}</h6>
+                                </a>
                                 <p class="text-sm">
                                     {{ c['type'] }}
                                     {% if c['level'] %}L{{ c['level'] }}{% endif %}
