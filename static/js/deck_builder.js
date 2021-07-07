@@ -1,6 +1,3 @@
-const deck = {"main": [], "extra": [], "side": []};
-const extra_deck_types = ["Fusion Monster"];
-
 
 function card_list_sort() {
     const sort_param = document.getElementById('sort-param');
@@ -19,14 +16,7 @@ function card_list_filter() {
 }
 
 function deck_download() {
-    let text = "";
-    Object.entries(deck).forEach(([key, cards]) => {
-        text += (key === "side"? '!':'#') + key + '\n'
-        cards.forEach(c => text += c + '\n');
-        text += '\n';
-    });
-    console.log(text);
-    download("YGO-Prog-deck.ydk", text);
+    download("YGO-Prog-deck.ydk", get_deck_text());
 }
 
 function display_update(id) {

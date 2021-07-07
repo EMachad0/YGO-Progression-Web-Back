@@ -17,54 +17,16 @@ function onDrop(event) {
     const id = split[1];
     
     let dropzone = event.target;
-    let deck_id = dropzone.id;
-    while (!drop_zones.includes(deck_id)) {
-        dropzone = dropzone.parentNode;
-        deck_id = dropzone.id;
-    }
+    while (!drop_zones.includes(dropzone.id)) dropzone = dropzone.parentNode;
+    if (!drop_zones.includes(dropzone.id)) return;
     
-    console.log(data, deck_id)
-    
-    if (!drop_zones.includes(deck_id)) return;
+    console.log(data, dropzone.id)
     
     if (!card_values.hasOwnProperty(id)) return;
-    if (source === deck_id) return;
-    if (deck_id !== "card-list" && dropzone.childElementCount > (deck_id === "main" ? 60 : 15)) return;
-
-    if (deck_id === "extra") {
-        if (!extra_deck_types.includes(card_values[id]['type'])) return;
-    } else if (deck_id === "main" || deck_id === "side"){
-        if (extra_deck_types.includes(card_values[id]['type'])) return;
-    }
     
-    let inDeck = 0;
-    if (deck_id === "extra") inDeck += deck['extra'].filter(x => x === id).length;
-    else if (deck_id === "side" || deck_id === "main") {
-        inDeck += deck['side'].filter(x => x === id).length;
-        inDeck += deck['main'].filter(x => x === id).length;
-    }
-    if (source !== "card-list") inDeck--;
-    if (card_values[id]['quantity'] === inDeck || inDeck === 3) return;
-
     const elem = document.getElementById(data);
-
-    if (deck_id !== "card-list") {
-        const newDiv = document.createElement('div');
-        newDiv.classList.add("col-card", "m-0", "p-1");
-        newDiv.id = id;
-        const cln = elem.cloneNode(true);
-        cln.id = deck_id + "_" + id;
-        newDiv.appendChild(cln);
-    
-        dropzone.appendChild(newDiv);
-        deck[deck_id].push(id);
-        do_sort("level", "des", dropzone);
-    }
-    
-    if (source !== "card-list") {
-        deck[source].splice(deck[source].indexOf(id), 1);
-        elem.parentElement.remove();
-    }
+    add_card(source, id, elem, dropzone);
+    remove_card(source, id, elem);
 
     event.dataTransfer.clearData();
 }
