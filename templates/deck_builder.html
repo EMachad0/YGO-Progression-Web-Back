@@ -71,7 +71,8 @@
                             <div class="col-3 m-0 p-0">
                                 <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg"
                                      alt="" class="img-fluid" draggable="true" ondragstart="onDragStart(event);"
-                                     onmouseover="display_update(this.id);" id="card-list_{{ c['card_cod'] }}">
+                                     onmouseover="display_update(this.id);" oncontextmenu="right_click(event)" 
+                                     id="card-list_{{ c['card_cod'] }}">
                             </div>
                             <div class="col-9 text-center align-middle">
                                 <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}" target="_blank">
@@ -102,6 +103,7 @@
     <script src="{{ url_for("static", filename="js/card_sort.js") }}"></script>
     <script src="{{ url_for("static", filename="js/card_filter.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/right_click.js") }}"></script>
     <script src="{{ url_for("static", filename="js/text_download.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck_builder.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck_builder_drag_drop.js") }}"></script>
