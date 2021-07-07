@@ -8,9 +8,9 @@ blue = Blueprint('collection', __name__, static_folder="static", template_folder
 # http://localhost:5000/collection/823962832583655424/203615933539942400#
 
 PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
-COLLECTION_SELECT = "select * from (select pull_cod from collection where player_cod=%s) c " \
-                    "join pull p on p.pull_cod = c.pull_cod " \
-                    "join card cd on cd.card_cod = p.card_cod;"
+COLLECTION_SELECT = "select c.card_cod, name, atk, def, cod_img, level, scale, link_val from (select pull_cod from collection where player_cod=%s) col " \
+                    "join pull p on p.pull_cod = col.pull_cod " \
+                    "join card c on c.card_cod = p.card_cod;"
 
 @blue.route('/<guild>/<user>')
 def collection(guild, user):

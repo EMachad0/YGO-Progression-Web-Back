@@ -5,9 +5,11 @@ from notebooks import db
 blue = Blueprint('deck_builder', __name__, static_folder="static", template_folder="templates")
 
 PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
-COLLECTION_SELECT = "select * from (select pull_cod, quantity from collection where player_cod=%s) c " \
-                    "join pull p on p.pull_cod = c.pull_cod " \
-                    "join card cd on cd.card_cod = p.card_cod;"
+COLLECTION_SELECT = "select c.card_cod, name, type, atk, def, level, scale, race, attribute, cod_img, link_val, quantity from " \
+                    "(select pull_cod, quantity from collection where player_cod=%s) col " \
+                    "join pull p on p.pull_cod = col.pull_cod " \
+                    "join card c on c.card_cod = p.card_cod;"
+
 
 @blue.route('/<guild>/<user>')
 def deck_builder(guild, user):
