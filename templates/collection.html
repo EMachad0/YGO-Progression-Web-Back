@@ -3,7 +3,7 @@
 {% block head %}
     <link href="/static/css/collection.css" rel="stylesheet"> {% endblock %}
 {% block content %}
-    <main class="container">
+    <main class="container min-vh-100">
         <h1 class="text-center">Collection</h1>
         <div class="container">
             <div class="row p-2">
@@ -31,7 +31,7 @@
                     <input class="form-control" type="text" onchange="card_list_filter()" id="filter-name" placeholder="Blue-Eyes White Dragon">
                 </div>
             </div>
-            <div class="row min-vh-100" id="card-list">
+            <div class="row" id="card-list">
                 {% for c in cards %}
                     <div class="col-md-2 m-0 p-0{% if loop.index > 30 %}{{ ' hide' }}{% endif %}" id="{{ c['card_cod'] }}">
                         <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}">
