@@ -59,4 +59,4 @@ def get_img_banlist(cod, limit, overwrite=False):
     
     
 if __name__ == '__main__':
-    get_img_banlist_small(66788016, 2, True)
+    pass
