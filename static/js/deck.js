@@ -14,7 +14,9 @@ function add_card(source, card_id, card, zone) {
     }
     
     let inDeck = get_amount_in_deck(source, card_id, deck_id);
-    if (card_values[card_id]['quantity'] === inDeck || inDeck === 3) return;
+    let limit = 3;
+    if (ban_list.hasOwnProperty(card_values[card_id]['name'])) limit = ban_list[card_values[card_id]['name']];
+    if (card_values[card_id]['quantity'] === inDeck || inDeck === limit) return;
     
     const newDiv = document.createElement('div');
     newDiv.classList.add("col-card", "m-0", "p-1");

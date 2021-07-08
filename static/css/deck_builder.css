@@ -34,3 +34,7 @@
 .draggable {
     cursor: move;
 }
+
+.box {
+    max-height: 50%;
+}

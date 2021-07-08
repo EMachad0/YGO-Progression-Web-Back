@@ -35,7 +35,8 @@
                 {% for c in cards %}
                     <div class="col-md-2 m-0 p-0{% if loop.index > 30 %}{{ ' hide' }}{% endif %}" id="{{ c['card_cod'] }}">
                         <a href="https://db.ygoprodeck.com/card/?search={{ c['card_cod'] }}">
-                            <img src="https://storage.googleapis.com/ygoprodeck.com/pics/{{ c['cod_img'] }}.jpg" alt="" class="img-fluid">
+                            <img src="{{ url_for("static", filename="img/card_images/%s.jpg" % c['cod_img']) }}" alt="" 
+                                 class="img-fluid" loading="lazy">
                         </a>
                     </div>
                 {% endfor %}

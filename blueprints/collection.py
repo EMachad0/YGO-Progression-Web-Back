@@ -1,7 +1,6 @@
-import json
 from flask import Blueprint, redirect, url_for, render_template
 
-from notebooks import db
+from notebooks import db, banlist, images
 
 blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 
@@ -18,8 +17,16 @@ def collection(guild, user):
     if len(player) == 0:
         return redirect(url_for("login.login"))
     player = player[0]
-    
+
     cards = db.make_select(COLLECTION_SELECT, [player['player_cod']])
+    ban_list = banlist.get_guild_banlist(guild)
+    for c in cards:
+        images.get_img(c['cod_img'])
+        if c['name'] in ban_list:
+            limit = ban_list[c['name']]
+            images.get_img_banlist(c['cod_img'], limit)
+            c['cod_img'] = f"{c['cod_img']}_{limit}"
+            
     cards_json = {c['card_cod']: c for c in cards}
     return render_template('collection.html', cards=cards, cards_json=cards_json, guild=guild, user=user)
 

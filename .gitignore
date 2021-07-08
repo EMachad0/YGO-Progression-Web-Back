@@ -488,3 +488,6 @@ fabric.properties
 
 *.env
 .vscode
+
+static/img/card_images/*.jpg
+static/img/card_images_small/*.jpg
