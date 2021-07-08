@@ -8,7 +8,7 @@ SERVER_SELECT = "select settings from discord_server where server_cod=%s;"
 def get_all_config(server_cod):
     data = db.make_select(SERVER_SELECT, [server_cod])
     if len(data) == 0:
-        raise Exception("Invalid Server Cod")
+        raise KeyError("Invalid Server Cod")
     return json.loads(data[0]['settings'])
 
 
