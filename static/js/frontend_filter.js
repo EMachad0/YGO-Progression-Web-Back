@@ -6,7 +6,7 @@ function show(element) {
     element.classList.remove("hide");
 }
 
-function do_filter(list) {
+function frontend_filter(list) {
     const name = document.getElementById('filter-name')
     
     let toFilter = list.children;
@@ -16,4 +16,9 @@ function do_filter(list) {
         if (name != null && name.value !== "" && !card['name'].toLowerCase().includes(name.value.toLowerCase())) hide(v);
         else show(v);
     });
+}
+
+function frontend_card_list_filter() {
+    const list = document.getElementById('card-list');
+    frontend_filter(list);
 }

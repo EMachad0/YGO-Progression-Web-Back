@@ -9,7 +9,7 @@
             <div class="row p-2">
                 <div class="col">
                     <label class="form-label" for="sort-param">Sort by</label>
-                    <select class="form-control" onchange="card_list_sort()" id="sort-param">
+                    <select class="form-control" onchange="update_card_list()" id="sort-param">
                         <option selected>any</option>
                         <option>name</option>
                         <option>atk</option>
@@ -21,14 +21,14 @@
                 </div>
                 <div class="col">
                     <label class="form-label" for="sort-order">Order</label>
-                    <select class="form-control" onchange="card_list_sort()" id="sort-order">
+                    <select class="form-control" onchange="frontend_card_list_sort()" id="sort-order">
                         <option selected>asc</option>
                         <option>des</option>
                     </select>
                 </div>
                 <div class="col">
                     <label class="form-label" for="filter-name">Name</label>
-                    <input class="form-control" type="text" onchange="card_list_filter()" id="filter-name" placeholder="Blue-Eyes White Dragon">
+                    <input class="form-control" type="text" onchange="frontend_card_list_filter()" id="filter-name" placeholder="Blue-Eyes White Dragon">
                 </div>
             </div>
             <div class="row" id="card-list">
@@ -45,10 +45,7 @@
     </main>
 {% endblock %}
 {% block script %}
-    <script>
-        const card_values = JSON.parse('{{ cards_json|tojson|safe }}');
-    </script>
-    <script src="{{ url_for("static", filename="js/card_sort.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/card_filter.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/collection.js") }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ url_for("static", filename="js/path_reader.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/card_list.js") }}"></script>
 {% endblock %}

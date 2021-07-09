@@ -27,7 +27,7 @@ function add_card(source, card_id, card, zone) {
 
     zone.appendChild(newDiv);
     deck[deck_id].push(card_id);
-    do_sort("level", "des", zone);
+    frontend_sort("level", "des", zone);
 }
 
 function remove_card(source, card_id, card) {

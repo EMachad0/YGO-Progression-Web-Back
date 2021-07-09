@@ -1,37 +1,44 @@
-from flask import Blueprint, redirect, url_for, render_template
+import json
 
-from notebooks import db, banlist, images
+from flask import Blueprint, request, redirect, url_for, render_template
+
+from notebooks import banlist_utils, images
+from notebooks.dao import player_dao, collection_dao
 
 blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 
-# http://localhost:5000/collection/823962832583655424/203615933539942400#
-
-PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
-COLLECTION_SELECT = "select c.card_cod, name, atk, def, cod_img, level, scale, link_val from (select pull_cod from collection where player_cod=%s) col " \
-                    "join pull p on p.pull_cod = col.pull_cod " \
-                    "join card c on c.card_cod = p.card_cod;"
+# collection/823962832583655424/203615933539942400
 
 @blue.route('/<guild>/<user>')
 def collection(guild, user):
-    player = db.make_select(PLAYER_SELECT, (user, guild))
-    if len(player) == 0:
+    player = player_dao.get_player_by_user_server(user, guild)
+    if player is None:
         return redirect(url_for("login.login"))
-    player = player[0]
+    print(guild, user)
+    return render_template('collection.html', guild=guild, user=user)
 
-    cards = db.make_select(COLLECTION_SELECT, [player['player_cod']])
-    ban_list = banlist.get_guild_banlist(guild)
+
+@blue.route('/')
+def collection_card_list():
+    params = request.args
+    if params.get('guild') is None or params.get('user') is None:
+        return "{'error': 'No User or guild'}"
+
+    player = player_dao.get_player_by_user_server(params['user'], params['guild'])
+    if player is None:
+        return "{'error': 'Invalid Player'}"
+
+    cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'), params.get('name_filter'))
+    ban_list = banlist_utils.get_guild_banlist(params['guild'])
+
+    cards = [dict(c) for c in cards]
     for c in cards:
-        images.get_img(c['cod_img'])
-        if c['name'] in ban_list:
-            limit = ban_list[c['name']]
-            images.get_img_banlist(c['cod_img'], limit)
-            c['cod_img'] = f"{c['cod_img']}_{limit}"
-            
+        c['limit'] = ban_list.get(c['name'])
+        if c.get('limit') is None:
+            images.get_img(c['cod_img'])
+        else:
+            images.get_img_banlist(c['cod_img'], c['limit'])
+            c['cod_img'] = f"{c['cod_img']}_{c['limit']}"
+
     cards_json = {c['card_cod']: c for c in cards}
-    return render_template('collection.html', cards=cards, cards_json=cards_json, guild=guild, user=user)
-
-
-if __name__ == "__main__":
-    car = db.make_select(COLLECTION_SELECT, [7])
-    car = {c['card_cod']:c for c in car}
-    print(car)
+    return json.dumps(cards_json)

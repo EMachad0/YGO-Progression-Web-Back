@@ -1,9 +1,11 @@
-from notebooks import db
+from app import db
 
 
-def get_player_cod(user_cod, server_cod):
-    player_select = "select player_cod from player where server_cod=%s and user_cod=%s;"
-    data = db.make_select(player_select, (server_cod, user_cod))
-    if len(data) == 0:
-        raise KeyError("No player found")
-    return data[0]['user_cod']
+class Player(db.Model):
+    player_cod = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
+    user_cod = db.Column(db.BigInteger, db.ForeignKey('discord_user.user_cod'))
+    server_cod = db.Column(db.BigInteger, db.ForeignKey('discord_server.server_cod'))
+
+
+def get_player_by_user_server(user_cod, server_cod):
+    return Player.query.filter(Player.user_cod==user_cod, Player.server_cod==server_cod).first()

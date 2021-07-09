@@ -40,7 +40,7 @@
                 <div class="row p-2">
                     <div class="col">
                         <label class="form-label" for="sort-param">Sort by</label>
-                        <select class="form-control" onchange="card_list_sort()" id="sort-param">
+                        <select class="form-control" onchange="frontend_card_list_sort()" id="sort-param">
                             <option selected>any</option>
                             <option>name</option>
                             <option>atk</option>
@@ -52,14 +52,14 @@
                     </div>
                     <div class="col">
                         <label class="form-label" for="sort-order">Order</label>
-                        <select class="form-control" onchange="card_list_sort()" id="sort-order">
+                        <select class="form-control" onchange="frontend_card_list_sort()" id="sort-order">
                             <option selected>asc</option>
                             <option>des</option>
                         </select>
                     </div>
                     <div class="col">
                         <label class="form-label" for="filter-name">Name</label>
-                        <input class="form-control" type="text" onchange="card_list_filter()" id="filter-name"
+                        <input class="form-control" type="text" onchange="frontend_card_list_filter()" id="filter-name"
                                placeholder="Blue-Eyes White Dragon">
                     </div>
                 </div>
@@ -101,8 +101,8 @@
         const card_values = JSON.parse('{{ cards_json|tojson|safe }}');
         const ban_list = JSON.parse('{{ banlist|tojson|safe }}');
     </script>
-    <script src="{{ url_for("static", filename="js/card_sort.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/card_filter.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/frontend_sort.js") }}"></script>
+    <script src="{{ url_for("static", filename="js/frontend_filter.js") }}"></script>
     <script src="{{ url_for("static", filename="js/deck.js") }}"></script>
     <script src="{{ url_for("static", filename="js/right_click.js") }}"></script>
     <script src="{{ url_for("static", filename="js/text_download.js") }}"></script>

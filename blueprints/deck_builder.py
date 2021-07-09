@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, url_for, render_template
 
-from notebooks import db, banlist, images
+from notebooks import banlist_utils, images
+from notebooks.dao import db
 
 blue = Blueprint('deck_builder', __name__, static_folder="static", template_folder="templates")
 
@@ -19,7 +20,7 @@ def deck_builder(guild, user):
     player = player[0]
 
     cards = db.make_select(COLLECTION_SELECT, [player['player_cod']])
-    ban_list = banlist.get_guild_banlist(guild)
+    ban_list = banlist_utils.get_guild_banlist(guild)
     for c in cards:
         images.get_img(c['cod_img'])
         if c['name'] in ban_list:
