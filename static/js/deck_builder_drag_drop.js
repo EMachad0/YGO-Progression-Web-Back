@@ -2,8 +2,8 @@ const drop_zones = ["main", "extra", "side", "card-list"]
 
 function onDragOver(event) {
     event.preventDefault();
-
 }
+
 function onDragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
     console.log("dragging " + event.target.id)
