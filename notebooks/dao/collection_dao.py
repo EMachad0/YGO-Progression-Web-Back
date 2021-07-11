@@ -22,7 +22,6 @@ def get_player_collection(player_cod, offset=None, limit=None, name_filter=None,
         query = query.filter(Card.name.ilike(name_filter))
     query = apply_sort(query, sorts)
     query = apply_filter(query, filters)
-    query = query.order_by(asc('name'))
     query = query.offset(offset).limit(limit)
     # print(query.cte())
     return query.all()
