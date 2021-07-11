@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 import blueprints
-app.register_blueprint(blueprints.api)
+app.register_blueprint(blueprints.collection)
 
 @app.route('/')
 def index():

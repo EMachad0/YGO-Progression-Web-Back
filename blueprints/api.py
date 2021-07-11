@@ -5,11 +5,11 @@ from flask import Blueprint, request
 from notebooks import banlist_utils
 from notebooks.dao import player_dao, collection_dao
 
-blue = Blueprint('api', __name__, static_folder="static", template_folder="templates")
+blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 
 
 @blue.route('/')
-def api():
+def collection():
     params = request.args
     if params.get('guild') is None or params.get('user') is None:
         return "{'error': 'No User or guild'}"
