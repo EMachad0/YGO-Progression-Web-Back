@@ -9,6 +9,7 @@ class Card(db.Model):
     atk = db.Column(db.Integer)
     dff = db.Column('def', db.Integer)
     level = db.Column(db.Integer)
+    scale = db.Column(db.Integer)
     race = db.Column(db.String(100))
     attribute = db.Column(db.String(100))
     archetype = db.Column(db.String(100))
