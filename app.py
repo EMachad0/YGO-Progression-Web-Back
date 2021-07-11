@@ -10,9 +10,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 import blueprints
-app.register_blueprint(blueprints.login)
-app.register_blueprint(blueprints.collection, url_prefix="/collection")
-# app.register_blueprint(blueprints.deck_builder, url_prefix="/deck_builder")
 app.register_blueprint(blueprints.api)
 
 @app.route('/')
