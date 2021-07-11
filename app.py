@@ -1,15 +1,20 @@
-from flask import Flask, url_for, redirect
+import os
 
-import blueprints
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.register_blueprint(blueprints.login)
-app.register_blueprint(blueprints.collection, url_prefix="/collection")
-app.register_blueprint(blueprints.deck_builder, url_prefix="/deck_builder")
+app.secret_key = os.environ['SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+import blueprints
+app.register_blueprint(blueprints.collection)
 
 @app.route('/')
 def index():
-    return redirect(url_for('login.login'))
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
