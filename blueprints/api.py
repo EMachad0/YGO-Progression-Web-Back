@@ -8,7 +8,7 @@ from notebooks.dao import player_dao, collection_dao
 blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 
 
-@blue.route('/')
+@blue.route('/api/')
 def collection():
     params = request.args
     if params.get('guild') is None or params.get('user') is None:
