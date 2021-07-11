@@ -14,7 +14,7 @@ app.register_blueprint(blueprints.collection)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return ""
 
 
 if __name__ == '__main__':
