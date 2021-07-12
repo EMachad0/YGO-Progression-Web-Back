@@ -12,5 +12,5 @@ def get_guild_banlist(server_cod):
         banlist_date = datetime.strptime(banlist_date, "%B %Y")
         banlist = banlist_dao.get_banlist_by_date(banlist_date)
         return json.loads(banlist.list)
-    except (ValueError, KeyError):
+    except (ValueError, KeyError, TypeError):
         return {}
