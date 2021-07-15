@@ -10,7 +10,8 @@ class PlayerOptions(db.Model):
                          db.Column('races', JSONB),
                          db.Column('archetypes', JSONB),
                          db.Column('sets', JSONB),
-                         db.Column('rarities', JSONB))
+                         db.Column('rarities', JSONB),
+                         db.Column('card_total', db.BigInteger))
 
 
 def get_player_options(player_cod):
