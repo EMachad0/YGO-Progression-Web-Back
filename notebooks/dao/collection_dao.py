@@ -27,6 +27,7 @@ def get_player_collection(player_cod, offset=None, limit=None, name_filter=None,
         query = query.filter(sub.c.rarities.comparator.contains([rarity_filter]))
     query = apply_sort(query, sorts)
     query = apply_filter(query, filters)
+    cont = query.count()
     query = query.offset(offset).limit(limit)
     # print(query.cte())
-    return query.all()
+    return cont, query.all()

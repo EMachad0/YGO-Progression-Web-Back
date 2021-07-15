@@ -26,15 +26,25 @@ def collection():
     if params.get('field') != 'Name':
         sorts.append({'model': 'Card', 'field': 'name', 'direction': 'asc', 'nulls': 'nullslast'})
 
-    cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'),
-                                                 params.get('name'), params.get('text'), params.get('set'),
-                                                 params.get('rarity'), sorts=sorts)
+    filters = []
+    if params.get('type') is not None:
+        filters.append({'model': 'Card', 'field': 'type', 'op': '==', 'value': f"'{params['type']}'"})
+    if params.get('attribute') is not None:
+        filters.append({'model': 'Card', 'field': 'attribute', 'op': '==', 'value': f"'{params['attribute']}'"})
+    if params.get('race') is not None:
+        filters.append({'model': 'Card', 'field': 'race', 'op': '==', 'value': f"'{params['race']}'"})
+    if params.get('archetype') is not None:
+        filters.append({'model': 'Card', 'field': 'archetype', 'op': '==', 'value': f"'{params['archetype']}'"})
+
+    cont, cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'),
+                                                       params.get('name'), params.get('text'), params.get('set'),
+                                                       params.get('rarity'), sorts=sorts, filters=filters)
     ban_list = banlist_utils.get_guild_banlist(params['guild'])
 
     cards = [dict(c) for c in cards]
     for c in cards:
         c['limit'] = ban_list.get(c['name'])
-    return json.dumps(cards)
+    return json.dumps({'card_quantity': cont, 'cards': cards})
 
 
 @blue.route('/collection/player_option')
