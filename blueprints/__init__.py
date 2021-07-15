@@ -1,1 +1,1 @@
-from blueprints.api import blue as collection
+from blueprints.collection import blue as collection
