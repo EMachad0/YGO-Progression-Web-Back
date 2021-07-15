@@ -18,8 +18,14 @@ def collection():
     if player is None:
         return "{'error': 'Invalid Player'}"
 
-    sorts = [{'model': 'Card', 'field': params.get('field') if params.get('field') else 'name',
-              'direction': params.get('dir') if params.get('dir') else 'asc', 'nulls': 'nullslast'}]
+    if 'dir' not in params:
+        params['dir'] = 'asc'
+
+    sorts = []
+    if params.get('field') is not None:
+        sorts = [{'model': 'Card', 'field': params['field'], 'direction': params['dir'], 'nulls': 'nullslast'}]
+    if params.get('field') is not 'Name':
+        sorts.append({'model': 'Card', 'field': 'name', 'direction': 'asc', 'nulls': 'nullslast'})
 
     cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'),
                                                  params.get('name'), params.get('text'), params.get('set'),
