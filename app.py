@@ -11,9 +11,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
 
-
 import blueprints
+
 app.register_blueprint(blueprints.collection)
+app.register_blueprint(blueprints.sett)
+
 
 @app.route('/')
 def index():
