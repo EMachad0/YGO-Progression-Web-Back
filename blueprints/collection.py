@@ -2,8 +2,8 @@ import json
 
 from flask import Blueprint, request
 
-from notebooks import banlist_utils
-from notebooks.dao import player_dao, collection_dao
+from notebooks import banlist_utils, utils
+from notebooks.dao import player_dao, collection_dao, player_options_dao
 
 blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 
@@ -18,13 +18,12 @@ def collection():
     if player is None:
         return "{'error': 'Invalid Player'}"
 
-    if 'dir' not in params:
-        params['dir'] = 'asc'
+    direction = params['dir'] if params.get('dir') is not None else 'asc'
 
     sorts = []
     if params.get('field') is not None:
-        sorts = [{'model': 'Card', 'field': params['field'], 'direction': params['dir'], 'nulls': 'nullslast'}]
-    if params.get('field') is not 'Name':
+        sorts = [{'model': 'Card', 'field': params['field'], 'direction': direction, 'nulls': 'nullslast'}]
+    if params.get('field') != 'Name':
         sorts.append({'model': 'Card', 'field': 'name', 'direction': 'asc', 'nulls': 'nullslast'})
 
     cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'),
@@ -36,3 +35,17 @@ def collection():
     for c in cards:
         c['limit'] = ban_list.get(c['name'])
     return json.dumps(cards)
+
+
+@blue.route('/collection/player_option')
+def collection_player_option():
+    params = request.args
+    if params.get('guild') is None or params.get('user') is None:
+        return "{'error': 'No User or guild'}"
+
+    player = player_dao.get_player_by_user_server(params['user'], params['guild'])
+    if player is None:
+        return "{'error': 'Invalid Player'}"
+
+    option = player_options_dao.get_player_options(player.player_cod)
+    return json.dumps(utils.row2dict(option)).replace(', null', '')
