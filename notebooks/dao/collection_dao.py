@@ -8,8 +8,8 @@ class Collection(db.Model):
     quantity = db.Column(db.Integer)
 
 
-def get_player_collection(player_cod, offset=None, limit=None, name_filter=None, set_filter=None, rarity_filter=None,
-                          sorts=None, filters=None):
+def get_player_collection(player_cod, offset=None, limit=None, name_filter=None, text_filter=None, set_filter=None,
+                          rarity_filter=None, sorts=None, filters=None):
     from notebooks.filters import apply_sort, apply_filter
     from notebooks.dao import Card, UniquePulls
 
@@ -19,6 +19,8 @@ def get_player_collection(player_cod, offset=None, limit=None, name_filter=None,
         .join(sub, sub.c.card_cod == Card.card_cod)
     if name_filter is not None:
         query = query.filter(Card.name.ilike(name_filter))
+    if text_filter is not None:
+        query = query.filter(Card.flavour_text.ilike(text_filter))
     if set_filter is not None:
         query = query.filter(sub.c.sets.comparator.contains([set_filter]))
     if rarity_filter is not None:

@@ -22,8 +22,8 @@ def collection():
               'direction': params.get('dir') if params.get('dir') else 'asc', 'nulls': 'nullslast'}]
 
     cards = collection_dao.get_player_collection(player.player_cod, params.get('offset'), params.get('limit'),
-                                                 params.get('name'), params.get('set'), params.get('rarity'),
-                                                 sorts=sorts)
+                                                 params.get('name'), params.get('text'), params.get('set'),
+                                                 params.get('rarity'), sorts=sorts)
     ban_list = banlist_utils.get_guild_banlist(params['guild'])
 
     cards = [dict(c) for c in cards]
