@@ -14,6 +14,8 @@ CORS(app)
 import blueprints
 
 app.register_blueprint(blueprints.collection)
+app.register_blueprint(blueprints.player)
+app.register_blueprint(blueprints.server)
 app.register_blueprint(blueprints.sett)
 
 
