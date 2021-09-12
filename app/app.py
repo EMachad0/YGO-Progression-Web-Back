@@ -2,11 +2,13 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 
 def create_app():
     _app = Flask(__name__)
     _app.secret_key = os.environ['SECRET_KEY']
+    CORS(app)
     return _app
 
 
