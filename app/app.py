@@ -8,7 +8,7 @@ from flask_cors import CORS
 def create_app():
     _app = Flask(__name__)
     _app.secret_key = os.environ['SECRET_KEY']
-    CORS(app)
+    CORS(_app)
     return _app
 
 
