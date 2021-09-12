@@ -1,9 +1,5 @@
-from notebooks.dao import *
-
-from sqlalchemy import asc, desc, nullslast, nullsfirst
-
-
-# sorts = [{'model':'Card', 'field': 'level', 'direction': 'des', 'nulls': 'nullslast'}]    
+# Examples of sorts and filters:
+# sorts = [{'model':'Card', 'field': 'level', 'direction': 'des', 'nulls': 'nullslast'}]
 # filters = [{'model':'Card', 'field': 'level', 'op': '>=', 'value': 3}]
 
 def apply_sort(query, sorts):

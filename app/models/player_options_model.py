@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 from sqlalchemy.dialects.postgresql import JSONB
 
 
@@ -12,7 +12,3 @@ class PlayerOptions(db.Model):
                          db.Column('sets', JSONB),
                          db.Column('rarities', JSONB),
                          db.Column('card_total', db.BigInteger))
-
-
-def get_player_options(player_cod):
-    return db.session.query(PlayerOptions).get(player_cod)

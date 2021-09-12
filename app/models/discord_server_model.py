@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 
 
 class DiscordServer(db.Model):
@@ -6,11 +6,3 @@ class DiscordServer(db.Model):
     name = db.Column(db.String(100))
     img_url = db.Column(db.String(500))
     settings = db.Column(db.Text)
-
-
-def get_discord_server(server_cod):
-    return DiscordServer.query.get(server_cod)
-
-
-def get_all_servers():
-    return DiscordServer.query.all()

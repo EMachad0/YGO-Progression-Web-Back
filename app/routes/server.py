@@ -2,8 +2,8 @@ import json
 
 from flask import Blueprint
 
-from notebooks import utils
-from notebooks.dao import discord_server_dao
+from app.notebooks import utils
+from app.dao import discord_server_dao
 
 blue = Blueprint('server', __name__, static_folder="static", template_folder="templates")
 

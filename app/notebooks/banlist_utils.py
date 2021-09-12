@@ -1,12 +1,12 @@
 import json
 from datetime import datetime
 
-from notebooks import config
-from notebooks.dao import banlist_dao
+from app.notebooks import config_utils
+from app.dao import banlist_dao
 
 
 def get_guild_banlist(server_cod):
-    banlist_date = config.get_config(server_cod, "ban_list")
+    banlist_date = config_utils.get_config(server_cod, "ban_list")
     # print(banlist_date)
     try:
         banlist_date = datetime.strptime(banlist_date, "%B %Y")

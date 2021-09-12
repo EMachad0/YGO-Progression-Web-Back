@@ -1,6 +1,6 @@
 import json
 
-from notebooks.dao.discord_server_dao import get_discord_server
+from app.dao.discord_server_dao import get_discord_server
 
 
 def get_server_settings(server_cod):

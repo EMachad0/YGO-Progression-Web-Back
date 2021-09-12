@@ -2,8 +2,8 @@ import json
 
 from flask import Blueprint, request
 
-from notebooks import banlist_utils, utils
-from notebooks.dao import player_dao, collection_dao, player_options_dao
+from app.notebooks import banlist_utils, utils
+from app.dao import player_dao, collection_dao, player_options_dao
 
 blue = Blueprint('collection', __name__, static_folder="static", template_folder="templates")
 

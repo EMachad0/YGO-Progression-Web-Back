@@ -2,8 +2,8 @@ import json
 
 from flask import Blueprint, request
 
-from notebooks import utils
-from notebooks.dao import player_dao
+from app.notebooks import utils
+from app.dao import player_dao
 
 blue = Blueprint('player', __name__, static_folder="static", template_folder="templates")
 

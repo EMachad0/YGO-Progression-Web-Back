@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 
 
 class Card(db.Model):
@@ -16,4 +16,3 @@ class Card(db.Model):
     cod_img = db.Column(db.Integer)
     link_val = db.Column(db.Integer)
     link_markers = db.Column(db.Integer)
-    
